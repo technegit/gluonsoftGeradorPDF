@@ -1,9 +1,11 @@
 <!-- Export to PDF Button -->
-<div data-container="true" id=block-export-pdf ng-controller="PDFGeneratorController">
+<div data-container="true" id="block-export-pdf" ng-controller="PDFGeneratorController">
     <div class="form-group" ng-init="titles = ['ID:', 'Enter more titles of columns...']; fileName = null;">
         <div class="component-holder ng-binding ng-scope">
-            <button class="btn btn-success"
-    		        ng-click="createPDF(titles, datasource.data, fileName)">
+            <button class="btn btn-success" 
+                    ng-click="createPDF(titles, datasource.data, fileName)" 
+                    columnstitles="['Column1', 'Column2', 'Column3']"
+                    pdf-filename="PDFFileName">
     		        <i class="fa fa-file-pdf-o"></i> 
     		        <span class="">PDF</span>
     		</button>   
