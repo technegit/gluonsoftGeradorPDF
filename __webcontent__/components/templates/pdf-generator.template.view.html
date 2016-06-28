@@ -1,24 +1,12 @@
 <!-- Export to PDF Button -->
-<div data-container="true" id="starter" ng-controller="PDFGeneratorController"> 
-    <div class="component-holder ng-binding ng-scope" 
-         data-component="crn-datasource" 
-         id="crn-datasource-290934">
-                <datasource name="DataSourcePDFExporter" 
-                            entity="" 
-                            keys="" 
-                            rows-per-page="100" 
-                            on-before-create="" 
-                            on-after-create="" 
-                            on-before-update="" 
-                            on-after-update="" 
-                            on-before-delete="" 
-                            on-after-delete="">
-                    <div class="component-holder ng-binding ng-scope" data-component="crn-button" id="crn-button-1019688">
-                        <button class="btn btn-success" 
-                                type="submit" 
-                                ng-click="createPDF()" 
-                                datasource="{{dataSourceName}}">Export para PDF</button>
-                     </div>    
-                </datasource>
+<div data-container="true" id=block-export-pdf ng-controller="PDFGeneratorController">
+    <div class="form-group" ng-init="titles = ['ID:', 'Enter more titles of columns...']; fileName = null;">
+        <div class="component-holder ng-binding ng-scope">
+            <button class="btn btn-success"
+    		        ng-click="createPDF(titles, datasource.data, fileName)">
+    		        <i class="fa fa-file-pdf-o"></i> 
+    		        <span class="">{{"PDF"}}</span>
+    		</button>   
+        </div>
     </div>
 </div>

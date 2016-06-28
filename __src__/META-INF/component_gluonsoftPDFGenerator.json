@@ -4,7 +4,7 @@
 	"components": [
 		{
 			"name": "crn-export-pdf",
-			"text": " Export JSON or Datasource to PDF File",
+			"text": " Export PDF File",
 			"class": "fa fa-file-pdf-o",
 			"templateURL": "${webcontent}/components/templates/pdf-generator.template.view.html",
 			"properties": {
