@@ -64,6 +64,7 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- Apache PDFBox - Gluonsoft PDF Generator -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
