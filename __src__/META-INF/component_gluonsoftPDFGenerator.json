@@ -4,7 +4,7 @@
 	"components": [
 		{
 			"name": "crn-export-pdf",
-			"text": " Export PDF File",
+			"text": " Export to PDF File",
 			"class": "fa fa-file-pdf-o",
 			"templateURL": "${webcontent}/components/templates/pdf-generator.template.view.html",
 			"properties": {
