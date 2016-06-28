@@ -1,2 +1,2 @@
 # gluonsoftGeradorPDF
-Gluonsoft Gerador de Arquivos PDF
+Gluonsoft PDF Files Generator

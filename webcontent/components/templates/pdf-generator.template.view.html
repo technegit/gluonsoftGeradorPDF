@@ -1,0 +1,24 @@
+<!-- Export to PDF Button -->
+<div data-container="true" id="starter" ng-controller="PDFGeneratorController"> 
+    <div class="component-holder ng-binding ng-scope" 
+         data-component="crn-datasource" 
+         id="crn-datasource-290934">
+                <datasource name="DataSourcePDFExporter" 
+                            entity="" 
+                            keys="" 
+                            rows-per-page="100" 
+                            on-before-create="" 
+                            on-after-create="" 
+                            on-before-update="" 
+                            on-after-update="" 
+                            on-before-delete="" 
+                            on-after-delete="">
+                    <div class="component-holder ng-binding ng-scope" data-component="crn-button" id="crn-button-1019688">
+                        <button class="btn btn-success" 
+                                type="submit" 
+                                ng-click="createPDF()" 
+                                datasource="{{dataSourceName}}">Export para PDF</button>
+                     </div>    
+                </datasource>
+    </div>
+</div>
