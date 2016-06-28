@@ -193,16 +193,47 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
     $scope.PDFGen = new PDFGenerator();
     $scope.fileName = "";
     
+    /**
+     * Get the Columns Name from a database table
+     */ 
+    $scope.getColumnsNamesFromDatasource = function(dataSource){
+      	var columns = [];
+      	
+      	var strJSON = JSON.stringify(dataSource.data[0]);
+      	var objJSON = JSON.parse(strJSON);
+      	
+      	for (var key in objJSON) {
+      		console.log(' name=' + key + ' value=' + objJSON[key]);
+      		if(key !== "$$hashKey"){
+      			columns.push(key);
+      		}
+      	}
+      	
+      	return columns;
+    };
+
+    /**
+     * Return if service is ok (true) or not (false)
+     */ 
     $scope.isServiceOK = function(){
         return this.PDFGen.getServiceStatus();  
     };
     
+    /**
+     * Creates the PDF File from a Datasource object
+     */ 
     $scope.createPDF = function(dataSource){
         var pdfNameComplement = new Date().getTime().toString();
         
         // FAZER UM LOOPING PELO DATA DO DATASOURCE E GERAR NOMES DAS COLUNAS E DADOS EM FORMATO JSON
+        var tableTitle = dataSource.name;
+        var columnsNameJSON = this.getColumnsNamesFromDatasource(dataSource);
+        var celValuesJSON = columnsNameJSON;
         
-        this.PDFGen.addNewTable("tableTitle_1", ["tableColumnsNamesJSON_1", "tableColumnsNamesJSON_2"], ["tableContentJSON_1", "tableContentJSON_2"]);
-        this.PDFGen.createPDF("PDF_" + pdfNameComplement);
+        // this.PDFGen.addNewTable("tableTitle_1", ["tableColumnsNamesJSON_1", "tableColumnsNamesJSON_2"], ["tableContentJSON_1", "tableContentJSON_2"]);
+        // this.PDFGen.createPDF("PDF_" + pdfNameComplement);
+        this.PDFGen.addNewTable(tableTitle, columnsNameJSON, celValuesJSON);
+        this.PDFGen.createPDF("PDF_" + tableTitle + pdfNameComplement);
     }
+    
 }]);
