@@ -11,10 +11,10 @@
         <name>Techne Engenharia e Sistemas</name>
     </organization>
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>__src__</sourceDirectory>
         <resources>
             <resource>
-                <directory>src</directory>
+                <directory>__src__</directory>
                 <includes>
                     <include>**</include>
                 </includes>
@@ -57,33 +57,29 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <warSourceDirectory>webcontent</warSourceDirectory>
+                    <warSourceDirectory>__webcontent__</warSourceDirectory>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
-        <!-- Apache PDFBox - Gluonsoft PDF Generator -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
             <version>2.0.0</version>
         </dependency>
-        
-        <!-- JSON Object -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
-        
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.cronospass.resource mimetype="folder/web">webcontent</project.cronospass.resource>
-        <project.cronospass.resource mimetype="folder/src">src</project.cronospass.resource>
+        <project.cronospass.resource mimetype="folder/src">__src__</project.cronospass.resource>
+        <project.cronospass.resource mimetype="folder/web">__webcontent__</project.cronospass.resource>
     </properties>
 </project>
