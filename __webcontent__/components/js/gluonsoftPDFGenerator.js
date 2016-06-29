@@ -210,7 +210,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
       	var objJSON = JSON.parse(strJSON);
       	
       	// Get the DataSource fields names that will be available in the PDF file
-        var elementFieldsFilter = event.srcElement.attributes.getNamedItem("datasourceIgnoredFields");
+        var elementFieldsFilter = event.srcElement.attributes.getNamedItem("datasource-Ignored-Fields");
         var dataSourceToPdf_IgnoredFields = [];  // Array of fields that will be used in the pdf file - defined by user (programmer).
         
         // If user defined fields that must be used in PDF, then it will be executed
