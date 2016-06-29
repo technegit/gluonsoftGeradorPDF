@@ -197,27 +197,54 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      * Get the Columns Name from a database table
      */ 
     $scope.getColumnsNamesFromDatasource = function(dataSource){
-        var columnsTmp = [];
-      	var columns = [];
+        var columnsTmp = [];  // Temp Array
+      	var columns = [];     // Array of columns
       	
-      	if(!(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0)){
-          	var strJSON = JSON.stringify(dataSource.data[0]);
-          	var objJSON = JSON.parse(strJSON);
-          	
-          	for (var key in objJSON) {  // Column names comes in inverted order from datasource
-          		//console.log(' name=' + key + ' value=' + objJSON[key]);
-          		if(key !== "$$hashKey"){
-          		  columnsTmp.push(key);
-          		}
-          	}
-          	
-          	for(var index = columnsTmp.length - 1; index >= 0; index--){  // Rever the column names order
-          	    columns.push(columnsTmp[index]);
-          	}
-          	
-      	} else {
+      	if(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0){
       	    Notification.warning("Sem dados para exportação!");
       	    console.log("getColumnsNamesFromDatasource: Sem dados para exportação!");
+      	    return columns;
+      	}
+      	
+      	var strJSON = JSON.stringify(dataSource.data[0]);
+      	var objJSON = JSON.parse(strJSON);
+      	
+      	// Get the DataSource fields names that will be available in the PDF file
+        var elementFieldsFilter = event.srcElement.attributes.getNamedItem("datasourceToPdfFields");
+        var dataSourceToPdf_Fields = [];  // Array of fields that will be used in the pdf file - defined by user (programmer).
+        
+        // If user defined fields that must be used in PDF, then it will be executed
+        if(elementFieldsFilter){
+            dataFieldsToPdfArray = elementFieldsFilter.value.split(",");
+            
+            for(key in dataFieldsToPdfArray){
+                var field = dataFieldsToPdfArray[key] !== undefined ? dataFieldsToPdfArray[key].trim() : "";
+                if(field) dataSourceToPdf_Fields.push(field);
+            }
+        }
+    
+        // Add the datasource fields name to the array 'columnsTmp'
+      	for (var key in objJSON) {  // Column names comes in inverted order from datasource
+      		  //console.log(' name=' + key + ' value=' + objJSON[key]);
+        		if(key !== "$$hashKey"){
+        		    columnsTmp.push(key);
+        		}
+      	}
+      	
+      	// Add only the fields that will be used in pdf file to the array 'columns'
+      	for(var index = columnsTmp.length - 1; index >= 0; index--){  // Revert the column names order
+      	    var ignoreColumn = false;
+      	    
+      	    for(key in dataSourceToPdf_Fields){ // Filter the fields that will be used in the pdf file.
+      	        if(columnsTmp[index] == dataSourceToPdf_Fields[key]){
+      	            ignoreColumn = true;
+      	            break;
+      	        }
+      	    }
+      	    
+      	    if(!ignoreColumn){
+      	      columns.push(columnsTmp[index]);
+      	    }
       	}
       	
       	return columns;
