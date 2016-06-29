@@ -197,18 +197,24 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      * Get the Columns Name from a database table
      */ 
     $scope.getColumnsNamesFromDatasource = function(dataSource){
+        var columnsTmp = [];
       	var columns = [];
       	
       	if(!(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0)){
           	var strJSON = JSON.stringify(dataSource.data[0]);
           	var objJSON = JSON.parse(strJSON);
           	
-          	for (var key in objJSON) {
+          	for (var key in objJSON) {  // Column names comes in inverted order from datasource
           		//console.log(' name=' + key + ' value=' + objJSON[key]);
           		if(key !== "$$hashKey"){
-          			columns.push(key);
+          		  columnsTmp.push(key);
           		}
           	}
+          	
+          	for(var index = columnsTmp.length - 1; index >= 0; index--){  // Rever the column names order
+          	    columns.push(columnsTmp[index]);
+          	}
+          	
       	} else {
       	    console.log("getColumnsNamesFromDatasource: Sem dados para exportação!");
       	}
