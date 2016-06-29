@@ -216,6 +216,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
           	}
           	
       	} else {
+      	    Notification.warning("Sem dados para exportação!");
       	    console.log("getColumnsNamesFromDatasource: Sem dados para exportação!");
       	}
       	
@@ -247,6 +248,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
                 }
           }
         } else {
+            Notification.warning("Sem dados para exportação!");
             console.log("getDataFromDatasource: Sem dados para exportação!");
         }
         
@@ -265,22 +267,23 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      */ 
     $scope.createPDF = function(dataSource){
         if(dataSource === undefined){
-            console.log("DataSource inválido!");  
+            Notification.warning("DataSource inválido!");
+            console.log("createPDF: DataSource inválido!");  
             return;
         } else if(dataSource.data === undefined || dataSource.data.length == 0){
+            Notification.warning("Sem dados para exportação!");
             console.log("createPDF: Sem dados para exportação!");
             return;
         }
         
         var pdfNameComplement = new Date().getTime().toString();
-        
-        var tableTitle = dataSource.name;
+        var tableTitle = dataSource.name !== undefined ? dataSource.name : "";
         var columnsNameJSON = this.getColumnsNamesFromDatasource(dataSource);
         var celValuesJSON = this.getDataFromDatasource(dataSource);
         
         // this.PDFGen.addNewTable("tableTitle_1", ["tableColumnsNamesJSON_1", "tableColumnsNamesJSON_2"], ["tableContentJSON_1", "tableContentJSON_2"]);
         // this.PDFGen.createPDF("PDF_" + pdfNameComplement);
-        this.PDFGen.addNewTable(tableTitle, columnsNameJSON, celValuesJSON);
+        this.PDFGen.addNewTable(tableTitle.toUpperCase(), columnsNameJSON, celValuesJSON);
         this.PDFGen.createPDF("PDF_" + tableTitle + pdfNameComplement);
     };
     
