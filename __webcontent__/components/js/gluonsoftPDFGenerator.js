@@ -211,15 +211,15 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
       	
       	// Get the DataSource fields names that will be available in the PDF file
         var elementFieldsFilter = event.srcElement.attributes.getNamedItem("datasourceToPdfFields");
-        var dataSourceToPdf_Fields = [];  // Array of fields that will be used in the pdf file - defined by user (programmer).
+        var dataSourceToPdf_IgnoredFields = [];  // Array of fields that will be used in the pdf file - defined by user (programmer).
         
         // If user defined fields that must be used in PDF, then it will be executed
         if(elementFieldsFilter){
-            dataFieldsToPdfArray = elementFieldsFilter.value.split(",");
+            var dataFieldsToPdfArray = elementFieldsFilter.value.split(",");
             
             for(key in dataFieldsToPdfArray){
                 var field = dataFieldsToPdfArray[key] !== undefined ? dataFieldsToPdfArray[key].trim() : "";
-                if(field) dataSourceToPdf_Fields.push(field);
+                if(field) dataSourceToPdf_IgnoredFields.push(field);
             }
         }
     
@@ -235,8 +235,8 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
       	for(var index = columnsTmp.length - 1; index >= 0; index--){  // Revert the column names order
       	    var ignoreColumn = false;
       	    
-      	    for(key in dataSourceToPdf_Fields){ // Filter the fields that will be used in the pdf file.
-      	        if(columnsTmp[index] == dataSourceToPdf_Fields[key]){
+      	    for(key in dataSourceToPdf_IgnoredFields){ // Filter the fields that will be used in the pdf file.
+      	        if(columnsTmp[index] == dataSourceToPdf_IgnoredFields[key]){
       	            ignoreColumn = true;
       	            break;
       	        }
