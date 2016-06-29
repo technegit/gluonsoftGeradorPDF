@@ -200,7 +200,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
         var columnsTmp = [];  // Temp Array
       	var columns = [];     // Array of columns
       	
-      	if(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0){
+      	if(dataSource === undefined || dataSource.data === undefined || dataSource.data.length === 0){
       	    Notification.warning("Sem dados para exportação!");
       	    console.log("getColumnsNamesFromDatasource: Sem dados para exportação!");
       	    return columns;
