@@ -243,6 +243,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
         } else {
             console.log("getDataFromDatasource: Sem dados para exportação!");
         }
+        
         return dataValues;
     };
     
@@ -257,10 +258,10 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      * Creates the PDF File from a Datasource object
      */ 
     $scope.createPDF = function(dataSource){
-        if(!(dataSource === undefined || dataSource.data === undefined)){
+        if(!(dataSource === undefined)){
             console.log("DataSource inválido!");  
             return;
-        } else if(dataSource.data.length == 0)){
+        } else if(dataSource.data === undefined || dataSource.data.length == 0){
             console.log("createPDF: Sem dados para exportação!");
             return;
         }
