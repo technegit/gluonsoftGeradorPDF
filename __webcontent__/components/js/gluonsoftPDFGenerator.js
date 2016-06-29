@@ -215,7 +215,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
     /**
      * Get data from the dataSource
      */ 
-    $scope.getDataFromDatasource = function(dataSource) {
+    $scope.getDataFromDatasource = function(dataSource){
         var dsLength = dataSource.data.length;
         var columnsNames = this.getColumnsNamesFromDatasource(dataSource);
         var dataValues = [];
@@ -255,7 +255,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
         // FAZER UM LOOPING PELO DATA DO DATASOURCE E GERAR NOMES DAS COLUNAS E DADOS EM FORMATO JSON
         var tableTitle = dataSource.name;
         var columnsNameJSON = this.getColumnsNamesFromDatasource(dataSource);
-        var celValuesJSON = columnsNameJSON;
+        var celValuesJSON = this.getDataFromDatasource(dataSource);
         
         // this.PDFGen.addNewTable("tableTitle_1", ["tableColumnsNamesJSON_1", "tableColumnsNamesJSON_2"], ["tableContentJSON_1", "tableContentJSON_2"]);
         // this.PDFGen.createPDF("PDF_" + pdfNameComplement);
