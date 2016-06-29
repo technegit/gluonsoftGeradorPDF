@@ -267,7 +267,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      */ 
     $scope.createPDF = function(dataSource){
         if(dataSource === undefined){
-            Notification.warning("DataSource inválido!");
+            Notification.error("DataSource inválido!");
             console.log("createPDF: DataSource inválido!");  
             return;
         } else if(dataSource.data === undefined || dataSource.data.length == 0){
