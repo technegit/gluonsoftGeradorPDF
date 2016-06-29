@@ -199,14 +199,18 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
     $scope.getColumnsNamesFromDatasource = function(dataSource){
       	var columns = [];
       	
-      	var strJSON = JSON.stringify(dataSource.data[0]);
-      	var objJSON = JSON.parse(strJSON);
-      	
-      	for (var key in objJSON) {
-      		//console.log(' name=' + key + ' value=' + objJSON[key]);
-      		if(key !== "$$hashKey"){
-      			columns.push(key);
-      		}
+      	if(!(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0)){
+          	var strJSON = JSON.stringify(dataSource.data[0]);
+          	var objJSON = JSON.parse(strJSON);
+          	
+          	for (var key in objJSON) {
+          		//console.log(' name=' + key + ' value=' + objJSON[key]);
+          		if(key !== "$$hashKey"){
+          			columns.push(key);
+          		}
+          	}
+      	} else {
+      	    console.log("getColumnsNamesFromDatasource: Sem dados para exportação!");
       	}
       	
       	return columns;
@@ -216,26 +220,29 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      * Get data from the dataSource
      */ 
     $scope.getDataFromDatasource = function(dataSource){
-        var dsLength = dataSource.data.length;
-        var columnsNames = this.getColumnsNamesFromDatasource(dataSource);
-        var dataValues = [];
-        
-        //for(key in columnsNames){
-        //    console.log(columnsNames[key]);
-        //}
-        
-        for(var i = 0; i < dsLength; i++){
-            //console.log(dataSource.data[i]);
+        if(!(dataSource === undefined || dataSource.data === undefined || dataSource.data.length == 0)){
+            var dsLength = dataSource.data.length;
+            var columnsNames = this.getColumnsNamesFromDatasource(dataSource);
+            var dataValues = [];
             
-            for(key in columnsNames){
-              var fieldValue = dataSource.data[i][columnsNames[key]];
-              fieldValue = fieldValue === undefined ? '' : fieldValue;
-              
-              //console.log(fieldValue);
-              dataValues.push(fieldValue);
-            }
+            //for(key in columnsNames){
+            //    console.log(columnsNames[key]);
+            //}
+            
+            for(var i = 0; i < dsLength; i++){
+                //console.log(dataSource.data[i]);
+                
+                for(key in columnsNames){
+                  var colName = columnsNames[key];
+                  var fieldValue = dataSource.data[i][colName] === undefined ? '' : dataSource.data[i][colName];
+                  
+                  //console.log(fieldValue);
+                  dataValues.push(fieldValue);
+                }
+          }
+        } else {
+            console.log("getDataFromDatasource: Sem dados para exportação!");
         }
-        
         return dataValues;
     };
     
@@ -250,9 +257,16 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
      * Creates the PDF File from a Datasource object
      */ 
     $scope.createPDF = function(dataSource){
+        if(!(dataSource === undefined || dataSource.data === undefined)){
+            console.log("DataSource inválido!");  
+            return;
+        } else if(dataSource.data.length == 0)){
+            console.log("createPDF: Sem dados para exportação!");
+            return;
+        }
+        
         var pdfNameComplement = new Date().getTime().toString();
         
-        // FAZER UM LOOPING PELO DATA DO DATASOURCE E GERAR NOMES DAS COLUNAS E DADOS EM FORMATO JSON
         var tableTitle = dataSource.name;
         var columnsNameJSON = this.getColumnsNamesFromDatasource(dataSource);
         var celValuesJSON = this.getDataFromDatasource(dataSource);
@@ -261,6 +275,6 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
         // this.PDFGen.createPDF("PDF_" + pdfNameComplement);
         this.PDFGen.addNewTable(tableTitle, columnsNameJSON, celValuesJSON);
         this.PDFGen.createPDF("PDF_" + tableTitle + pdfNameComplement);
-    }
+    };
     
 }]);
