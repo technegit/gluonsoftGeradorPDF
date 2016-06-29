@@ -203,7 +203,7 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
       	var objJSON = JSON.parse(strJSON);
       	
       	for (var key in objJSON) {
-      		console.log(' name=' + key + ' value=' + objJSON[key]);
+      		//console.log(' name=' + key + ' value=' + objJSON[key]);
       		if(key !== "$$hashKey"){
       			columns.push(key);
       		}
@@ -212,6 +212,33 @@ app.controller('PDFGeneratorController', ['$scope', '$rootScope', '$timeout', '$
       	return columns;
     };
 
+    /**
+     * Get data from the dataSource
+     */ 
+    $scope.getDataFromDatasource = function(dataSource) {
+        var dsLength = dataSource.data.length;
+        var columnsNames = this.getColumnsNamesFromDatasource(dataSource);
+        var dataValues = [];
+        
+        //for(key in columnsNames){
+        //    console.log(columnsNames[key]);
+        //}
+        
+        for(var i = 0; i < dsLength; i++){
+            //console.log(dataSource.data[i]);
+            
+            for(key in columnsNames){
+              var fieldValue = dataSource.data[i][columnsNames[key]];
+              fieldValue = fieldValue === undefined ? '' : fieldValue;
+              
+              //console.log(fieldValue);
+              dataValues.push(fieldValue);
+            }
+        }
+        
+        return dataValues;
+    };
+    
     /**
      * Return if service is ok (true) or not (false)
      */ 
