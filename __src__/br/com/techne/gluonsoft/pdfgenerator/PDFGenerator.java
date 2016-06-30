@@ -1,6 +1,22 @@
 package br.com.techne.gluonsoft.pdfgenerator;
 
 
+/* ====================================================================
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+==================================================================== */
+
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,6 +33,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 /**
  * Classe Manipuladora de arquivos PDF
+ * Used Lib: Apache PDFBox 2.0.2 (https://pdfbox.apache.org/)
  * 
  * @author Rudiney Patrick
  * @version 1.0
@@ -95,8 +112,8 @@ public class PDFGenerator {
   	 */
   	
   	/**
-  	 * Cria um novo documento PDF
-  	 * @param filename Nome do arquivo a ser criado.
+  	 * Create a new PDF document
+  	 * @param filename File name.
   	 */
   	public void createDocument(String fileName){
     		PDDocument doc = new PDDocument();
@@ -106,8 +123,8 @@ public class PDFGenerator {
   	}
   	
   	/**
-  	 * Adiciona uma nova página ao documento PDF
-  	 * @param page Objeto PDPage referente à nova página a ser criada.
+  	 * Add a new page to the PDF document
+  	 * @param page Object PDPage to be added to the PDF document.
   	 */
   	public void addNewPage(PDPage page){
     		PAGES_LIST.add(page);
@@ -132,7 +149,7 @@ public class PDFGenerator {
     		
     		final float PAGE_X_ALIGN_CENTER = PAGE_MAX_WIDTH / 2; // (PAGE_MAX_WIDTH + (2 * PAGE_MARGIN)) / 2 ;
     		
-    		PDPageContentStream pageContent = new PDPageContentStream(this.getPdfDocument(), page); // Stream da página
+    		PDPageContentStream pageContent = new PDPageContentStream(this.getPdfDocument(), page); // Page's Stream
     		
     		int line = 1;
     		
@@ -141,13 +158,13 @@ public class PDFGenerator {
     			pageContent.beginText();
     			pageContent.setFont(FONT_BOLD, FONT_SIZE_DEFAULT);
     			pageContent.newLineAtOffset(PAGE_X_ALIGN_CENTER, PAGE_INITIAL_Y_POSITION); // CENTER
-    			pageContent.showText(pageTitle);	// Título
+    			pageContent.showText(pageTitle);	// Title
     			pageContent.endText();
     			
     			pageContent.beginText();
     			pageContent.setFont(FONT_BOLD, FONT_SIZE_DEFAULT);
     			pageContent.newLineAtOffset(PAGE_MARGIN, PAGE_INITIAL_Y_POSITION - 10 * (line++)); // pageContent.newLineAtOffset(PAGE_MARGIN, PAGE_INITIAL_Y_POSITION);
-    			pageContent.showText("");	// Linha em branco após o título
+    			pageContent.showText("");	// Line after title
     			pageContent.endText();
     		}
     		
@@ -171,59 +188,60 @@ public class PDFGenerator {
 	
 	  
   	/**
-  	 * Cria uma tabela com o conteúdo recebido.
-  	 * @param tableTitle Título da tabela
-  	 * @param tableColumnsName	Array de Strings contendo os titulos de colunas da tabela.
-  	 * @param strTableContent Array de Strings contendo os dados da tabela.
+  	 * Create a page with table.
+  	 * @param tableTitle Table Title
+  	 * @param tableColumnsName	Array of Strings with table columns titles.
+  	 * @param strTableContent Array of Strings with the table data.
   	 * @throws IOException
   	 */
   	@SuppressWarnings("deprecation")
   	public void addNewTable(String tableTitle, ArrayList<String>tableColumnsName, ArrayList<String> strTableContent) throws IOException{
-  		PDPage tablePage = new PDPage(PDRectangle.A4);
-  		
-  		PDRectangle rect = new PDRectangle();
-  		rect = tablePage.getMediaBox();
-  		
-  		this.getPdfDocument().addPage(tablePage);
-  		
-  		PDPageContentStream pageContent = new PDPageContentStream(this.getPdfDocument(), tablePage);
-  		
-  		final float margin = 20f;
-  		final int tableRows = strTableContent.size();
-  		final int tableColumns = tableColumnsName.size();
-  		final float rowHeigth = 20f;
-  		final float tableWidth = rect.getWidth() - (2 * margin);
-  		final float tableHeight = rowHeigth * tableRows;
-  		final float tableColWidth = tableWidth / (float)tableColumns;
-  		final float tableCelMargin = 5f;
-  		
-  		// Desenha as linhas
-  		float nextY = PAGE_INITIAL_Y_POSITION;
-  		for(int r = 0; r <= tableRows; r++){
-  			pageContent.drawLine(margin, nextY, margin + tableWidth, nextY);
-  			nextY -= rowHeigth;
-  		}
-  		
-  		// Desenha as colunas
+    		PDPage tablePage = new PDPage(PDRectangle.A4);
+    		
+    		PDRectangle rect = new PDRectangle();
+    		rect = tablePage.getMediaBox();
+    		
+    		this.getPdfDocument().addPage(tablePage);
+    		
+    		PDPageContentStream pageContent = new PDPageContentStream(this.getPdfDocument(), tablePage);
+    		
+    		final float margin = 20f;
+    		final int tableRows = strTableContent.size();
+    		final int tableColumns = tableColumnsName.size();
+    		final float rowHeigth = 20f;
+    		final float tableWidth = rect.getWidth() - (2 * margin);
+    		final float tableHeight = rowHeigth * tableRows;
+    		final float tableColWidth = tableWidth / (float)tableColumns;
+    		final float tableCelMargin = 5f;
+    		
+    		// Draw the lines
+    		float nextY = PAGE_INITIAL_Y_POSITION;
+    		for(int r = 0; r <= tableRows; r++){
+    			pageContent.drawLine(margin, nextY, margin + tableWidth, nextY);
+    			nextY -= rowHeigth;
+    		}
+    		
+    		// Draw the columns
   	    float nextX = margin;
   	    for (int i = 0; i <= tableColumns; i++) {
   	    	pageContent.drawLine(nextX, PAGE_INITIAL_Y_POSITION, nextX, PAGE_INITIAL_Y_POSITION - tableHeight);
   	        nextX += tableColWidth;
   	    }
   	    
-  	    pageContent.setFont(FONT_BOLD, FONT_SIZE_DEFAULT);	// Fonte inicial para o título das colunas
+  	    pageContent.setFont(FONT_BOLD, FONT_SIZE_DEFAULT);	// Initial Font for the columns' titles
   	    
   	    float textPosX = margin + tableCelMargin;
   	    float textPosY = PAGE_INITIAL_Y_POSITION - 15;
   	    
-  	    // Titulo
+  	    // Title
   	    float centerX = tableWidth / 2 - (margin * 2);
+  	    float xAlignLeft = margin;
   	    pageContent.beginText();
-  	    pageContent.newLineAtOffset(centerX, PAGE_INITIAL_Y_POSITION + 5);
+  	    pageContent.newLineAtOffset(xAlignLeft, PAGE_INITIAL_Y_POSITION + 5);
   	    pageContent.showText(tableTitle);
   	    pageContent.endText();
   		
-  	    // Nome das colunas
+  	    // Columns' names
   	    for(int i = 0; i < tableColumnsName.size(); i++){
   	    	String columnName = tableColumnsName.get(i);
   	    	System.out.println(columnName);
@@ -238,7 +256,7 @@ public class PDFGenerator {
   //	    textPosY -= rowHeigth;
   //    	textPosX = margin + tableCelMargin;
       	
-      	// Conteudo das células (Adiciona o texto)
+      	// Cels' content (Add the text)
   	    int actualCol = 0;
   	    pageContent.setFont(FONT_PLAIN, FONT_SIZE_DEFAULT);
   	    for(int i = 0; i < strTableContent.size(); i++){
@@ -262,11 +280,17 @@ public class PDFGenerator {
   	    pageContent.close();
   	}
 	  
-	  
+	  /**
+  	 * Create a page with table.
+  	 * @param tableTitle Table Title
+  	 * @param tableColumnsName	Array of Strings with table columns titles.
+  	 * @param strTableContent Array of Strings with the table data.
+  	 * @throws IOException
+  	 */
     /**
-     * Cria uma tabela com o conteúdo recebido.
-     * @param tableTitle Título da tabela
-     * @param strTableContent	Array de Strings, onde os titulos das colunas ficam na primeira linha e os dados nas demais linhas.
+     * Create a page with table.
+     * @param tableTitle Table Title
+     * @param strTableContent	Array of Strings, where the column's titles goes into the first array line and the data goes into others lines.
      * @throws IOException
      */
     @SuppressWarnings("deprecation")
@@ -289,14 +313,14 @@ public class PDFGenerator {
       	final float tableColWidth = tableWidth / (float)tableColumns;
       	final float tableCelMargin = 5f;
       	
-      	// Desenha as linhas
+      	// Draw the lines
       	float nextY = PAGE_INITIAL_Y_POSITION;
       	for(int r = 0; r <= tableRows; r++){
       		pageContent.drawLine(margin, nextY, margin + tableWidth, nextY);
       		nextY -= rowHeigth;
       	}
     	
-    	  // Desenha as colunas
+    	  // Draw the columns
         float nextX = margin;
         for (int i = 0; i <= tableColumns; i++) {
         	pageContent.drawLine(nextX, PAGE_INITIAL_Y_POSITION, nextX, PAGE_INITIAL_Y_POSITION - tableHeight);
@@ -308,14 +332,14 @@ public class PDFGenerator {
         float textPosX = margin + tableCelMargin;
         float textPosY = PAGE_INITIAL_Y_POSITION - 15;
         
-        // Titulo
+        // Title
         float centerX = tableWidth / 2 - (margin * 2);
         pageContent.beginText();
         pageContent.newLineAtOffset(centerX, PAGE_INITIAL_Y_POSITION + 5);
         pageContent.showText(tableTitle);
         pageContent.endText();
     	
-      	// Conteudo das células (Adiciona o texto)
+      	// Cels' content (Add the text)
         for(int l = 0; l < strTableContent.length; l++){
         	for(int c = 0; c < strTableContent[l].length; c++){
         		String celText = strTableContent[l][c];
@@ -339,10 +363,10 @@ public class PDFGenerator {
     }	  
 	  
     /**
-    * Quebra uma linha em várias linhas, de acordo com o lineMaxSize informado.
-    * @param line String contendo o conteúdo da linha
-    * @param lineMaxSize Tamanho da linha
-    * @return Um array de Strings onde cada valor do array corresponde a uma nova linha
+    * Break a line into others.
+    * @param line String with line content
+    * @param lineMaxSize Line's Max size
+    * @return An array of Strings where each value correspond to a new line.
     */
     public ArrayList<String> autoBreakLineIntoOthers(String line, int lineMaxSize){
     	ArrayList<String> resultLines = new ArrayList<>();
@@ -361,7 +385,7 @@ public class PDFGenerator {
     		
     		
     		if(sbTemp.length() >= lineMaxSize && 
-    		  (c == ' ' || c == ','  || c == ';' || c == '.' || c == '!' || c == '?')) {	// Adiciona ao array se max length for alcançado e o caractere atual não for espaço ou vírgula
+    		  (c == ' ' || c == ','  || c == ';' || c == '.' || c == '!' || c == '?')) {	// Add to the array if max length reached and the actual character is none of espace, dot, comma...
     			resultLines.add(sbTemp.toString());
     			sbTemp.delete(0, sbTemp.length());
     		} else {
