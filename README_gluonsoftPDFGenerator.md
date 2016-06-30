@@ -8,7 +8,7 @@ It uses:
 - Jersey REST 2.2.1 for Web Service REST.
 
 ###How to use
-An html tag Button titled 'PDF' will be added to the project. This button is responsible for calling an javascript function that calls
+An html tag Button 'PDF' will be added to the project. This button is responsible for calling an javascript function that calls
 a rest service to generate the pdf file.
 You only need to feed the button properties with the right data info ('datasourceobject' and 'datasource-Ignored-Fields'), as the example below:
 
