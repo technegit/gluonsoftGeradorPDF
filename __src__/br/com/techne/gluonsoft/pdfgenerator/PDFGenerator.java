@@ -33,7 +33,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 /**
  * Classe Manipuladora de arquivos PDF
- * Used Lib: Apache PDFBox 2.0.2 (https://pdfbox.apache.org/)
+ * Used Library: Apache PDFBox 2.0.2 (https://pdfbox.apache.org/)
  * 
  * @author Rudiney Patrick
  * @version 1.0
@@ -206,8 +206,8 @@ public class PDFGenerator {
     		PDPageContentStream pageContent = new PDPageContentStream(this.getPdfDocument(), tablePage);
     		
     		final float margin = 20f;
-    		final int tableRows = strTableContent.size();
-    		final int tableColumns = tableColumnsName.size();
+    		final int tableRows = strTableContent != null ? strTableContent.size() : 0;
+    		final int tableColumns = tableColumnsName != null ? tableColumnsName.size() : 0;
     		final float rowHeigth = 20f;
     		final float tableWidth = rect.getWidth() - (2 * margin);
     		final float tableHeight = rowHeigth * tableRows;
