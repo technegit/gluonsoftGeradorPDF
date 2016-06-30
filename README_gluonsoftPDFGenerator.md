@@ -4,7 +4,7 @@
 #Introduction
 This gluonsoft exports json data into a PDF file.
 It uses:
-- Apache PDFBox 2.0.2 library, licensed under APACHE 2.0 LICENSE, to build PDF files. 
+- Apache PDFBox 2.0.2 library, published under APACHE 2.0 LICENSE, to build PDF files. 
 - Jersey REST 2.2.1 for Web Service REST.
 
 ###How to use
