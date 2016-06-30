@@ -196,7 +196,7 @@ public class PDFGenerator {
   	 */
   	@SuppressWarnings("deprecation")
   	public void addNewTable(String tableTitle, ArrayList<String>tableColumnsName, ArrayList<String> strTableContent) throws IOException{
-        PDRectangle rectLandscapeOrientation = new PDRectangle(PDRectangle.A4.getWidth(), PDRectangle.A4.getHeight()); // Landscape Orientation
+        PDRectangle rectLandscapeOrientation = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth()); // Changed width to height to get Landscape Orientation
   			
     		PDPage tablePage = new PDPage(PDRectangle.A4);
     		PDRectangle rect = tablePage.getMediaBox();
