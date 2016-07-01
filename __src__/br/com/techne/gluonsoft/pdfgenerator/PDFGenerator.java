@@ -48,7 +48,7 @@ public class PDFGenerator {
   	final float PAGE_MARGIN = 20f; 				      // PAGE MARGIN
   	
   	// Fonts
-  	final int FONT_SIZE_DEFAULT = 12;                                  // Default Font Size
+  	final int FONT_SIZE_DEFAULT = 8;                                  // Default Font Size
   	final PDFont FONT_PLAIN = PDType1Font.TIMES_ROMAN;                 // Plain Font
   	final PDFont FONT_BOLD = PDType1Font.TIMES_BOLD;                   // Bold Font
   	final PDFont FONT_ITALIC = PDType1Font.TIMES_ITALIC;               // Italic Font
