@@ -81,8 +81,10 @@ public class PDFGeneratorREST {
 	      
 	      Iterator<String> strData = tableData.iterator();
 	      while(strData.hasNext()){
-	          String data = strData.next();
-	          //System.out.println(data);
+	          //String data = strData.next();
+	          Object objData = strData.next();
+	          String data = objData != null ? objData.toString() : "";
+	          
 	          strTableContent.add(data);
 	      }
 	      
